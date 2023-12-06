@@ -134,4 +134,191 @@ SELECT * FROM employees JOIN departments ON employees.department_id departments.
 SELECT *FROM employees NATURAL JOIN departments SELECT FROM employees CROSS JOIN departments
 
 
+trigger code........ 
+
+
+-- Creating a sample table
+CREATE TABLE my_table (
+    id INT PRIMARY KEY,
+    name VARCHAR(255),
+    created_at TIMESTAMP
+);
+
+-- Creating a "before insert" trigger
+DELIMITER //
+CREATE TRIGGER before_insert_trigger
+BEFORE INSERT ON my_table
+FOR EACH ROW
+BEGIN
+    -- Setting the created_at column to the current timestamp
+    SET NEW.created_at = NOW();
+END;
+//
+DELIMITER ;
+
+
+primary key....... 
+
+
+
+CREATE TABLE your_table_name (
+    id INT PRIMARY KEY,
+    other_column1 VARCHAR(255),
+    other_column2 INT,
+    -- Add more columns as needed
+);
+
+
+create.... 
+
+
+CREATE TABLE your_table_name (
+    id INT PRIMARY KEY,
+    column1 VARCHAR(255),
+    column2 INT,
+    -- Add more columns as needed
+);
+
+
+
+
+rename
+
+
+-- Assuming you want to rename column1 to new_column1
+ALTER TABLE your_table_name
+CHANGE COLUMN column1 new_column1 VARCHAR(255);
+
+
+
+
+delete
+
+
+-- Assuming you want to delete column1
+ALTER TABLE your_table_name
+DROP COLUMN column1;
+
+
+modify
+
+
+-- Assuming you want to change the data type of column2 to BIGINT
+ALTER TABLE your_table_name
+MODIFY COLUMN column2 BIGINT;
+
+
+ading
+
+
+ALTER TABLE your_table_name
+ADD COLUMN new_column3 DATE;
+
+
+foreign key.... 
+
+-- Creating the 'customers' table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255),
+    -- Add more columns as needed
+);
+
+-- Creating the 'orders' table with a foreign key constraint
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    order_date DATE,
+    total_amount DECIMAL(10, 2),
+    customer_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+
+group by.... 
+
+SELECT category, SUM(amount) as total_amount
+FROM sales
+GROUP BY category;
+
+
+
+joins..... 
+
+SELECT 
+    employees.employee_id,
+    employees.employee_name,
+    employees.department_id,
+    departments.department_name
+FROM 
+    employees
+INNER JOIN 
+    departments ON employees.department_id = departments.department_id
+
+UNION
+
+SELECT 
+    employees.employee_id,
+    employees.employee_name,
+    employees.department_id,
+    departments.department_name
+FROM 
+    employees
+LEFT JOIN 
+    departments ON employees.department_id = departments.department_id
+
+UNION
+
+SELECT 
+    employees.employee_id,
+    employees.employee_name,
+    employees.department_id,
+    departments.department_name
+FROM 
+    employees
+RIGHT JOIN 
+    departments ON employees.department_id = departments.department_id
+
+UNION
+
+SELECT 
+    employees.employee_id,
+    employees.employee_name,
+    employees.department_id,
+    departments.department_name
+FROM 
+    employees
+FULL JOIN 
+    departments ON employees.department_id = departments.department_id;
+
+
+coursor..... 
+
+-- Declare variables
+DECLARE @EmployeeName VARCHAR(255)
+DECLARE @EmployeeSalary DECIMAL(10, 2)
+
+-- Declare and set up the cursor
+DECLARE employee_cursor CURSOR FOR
+SELECT EmployeeName, Salary FROM EmployeeTable
+
+-- Open the cursor
+OPEN employee_cursor
+
+-- Fetch the first row into the variables
+FETCH NEXT FROM employee_cursor INTO @EmployeeName, @EmployeeSalary
+
+-- Loop through the result set
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    -- Process the current row (replace with your logic)
+    PRINT 'Employee: ' + @EmployeeName + ', Salary: ' + CAST(@EmployeeSalary AS VARCHAR)
+
+    -- Fetch the next row
+    FETCH NEXT FROM employee_cursor INTO @EmployeeName, @EmployeeSalary
+END
+
+-- Close and deallocate the cursor
+CLOSE employee_cursor
+DEALLOCATE employee_cursor
+
 
